@@ -1,0 +1,11 @@
+#Translation of Tidyverse from Hadley Wickham
+
+
+-filter
+-select
+-merge
+-arrange
+-mutate
+-group_by
+-summarize
+-merge
