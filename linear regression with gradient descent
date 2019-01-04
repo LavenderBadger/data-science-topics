@@ -1,0 +1,67 @@
+#we are essientially programmatically encoding the mathematics of gradient descent for simple linear regression
+
+
+from numpy import *
+import pandas as pd
+
+
+#we want to minimize error. So we have to define it. Measure the distance between the predicted line and each actual point. 
+#Sum of Squared Errors
+#why do we square it? we just care about the maginitute
+def compute_error_for_given_points(b,m,points):
+        totalError = 0
+        for i in range(0,len(points)):
+            x = points[i,0]
+            y = points[i,1]
+            totalError += (y - (m * X + b)) **2
+            return totalError / float(len(points))
+        
+
+def step_gradient(b_current, m_current, points, learningRate):
+    #gradient descent
+    b_gradient = 0
+    m_gradient = 0
+    N = float(len(points))
+    for i in range(0,len(points)):
+        x = points[i,0]
+        y = points[i,1]
+        b_gradient += -(2/N) * (y - ((m_current * x) + b_current)) #partial deriviative 
+        m_gradient += -(2/N) * x * (y - ((m_current * x) + b_current))
+    
+    new_b = b_current = (learningRate * b_gradient)
+    new_m = m_current = (learningRate * m_gradient)
+    return [new_b, new_m]
+        
+    #the for loops are for iteration
+
+def gradient_descent_runner(points, starting_b, starting_m, learning_rate):
+    b = starting_b
+    m = starting_m
+    
+    for i in range(num_iterations):
+        b,m = step_gradient(b,m,array(points), learning_rate)
+    return[b,m]
+    
+def run():
+    points = pd.read_csv('data.csv')
+    #hyperparameters
+    learning_rate = 0.0001
+    #if the learning rate is too low, it will be too slow
+    #if the learning rate is too high, it can never converge
+    #right now you have to tune this yourself but now in DL, they learn the rate
+    
+    #y = mx+b (slope formula)
+    initial_b = 0
+    initial_m = 0
+    num_iterations = 1000
+    [b,m] = gradient_descent_runner(points, initial_b, intiial_m, learning_rate, num_iterations)
+    print(b)
+    print(m) 
+    
+    
+if__name__ == '__main__':
+    run()
+    
+
+
+
